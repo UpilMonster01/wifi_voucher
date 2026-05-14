@@ -5,7 +5,10 @@ include 'koneksi.php';
 $id = $_GET['id'];
 
 mysqli_query($conn,
-"DELETE FROM voucher WHERE id='$id'");
+"UPDATE voucher
+SET status='terpakai'
+WHERE id='$id'
+");
 
 header("Location: voucher.php");
 
