@@ -1,48 +1,33 @@
 <?php
+
 session_start();
 
 if(!isset($_SESSION['login'])){
-
     header("Location: login.php");
-
 }
-include 'koneksi.php';
 
+include 'koneksi.php';
 
 if(isset($_POST['generate'])){
 
     $paket = $_POST['paket'];
 
-    $kode = strtoupper(substr(md5(rand()),0,8));
+    $jumlah = $_POST['jumlah'];
 
-    mysqli_query($conn, "INSERT INTO voucher VALUES(
-        null,
-        '$kode',
-        '$paket',
-        'aktif'
-    )");
+    for($i=1; $i <= $jumlah; $i++){
+
+        $kode = strtoupper(substr(md5(rand()),0,8));
+
+        mysqli_query($conn, "INSERT INTO voucher VALUES(
+            null,
+            '$kode',
+            '$paket',
+            'aktif'
+        )");
+
+    }
+
 }
-
-$totalVoucher = mysqli_num_rows(
-mysqli_query($conn, "SELECT * FROM voucher")
-);
-
-$totalPaket = mysqli_num_rows(
-mysqli_query($conn, "SELECT * FROM paket")
-);
-
-$totalAktif = mysqli_num_rows(
-mysqli_query($conn,
-"SELECT * FROM voucher WHERE status='aktif'")
-);
-
-$totalPendapatan = mysqli_fetch_assoc(
-mysqli_query($conn,
-"SELECT SUM(harga) as total
-FROM voucher
-JOIN paket
-ON voucher.paket_id = paket.id")
-);
 
 $data = mysqli_query($conn, "
 SELECT
@@ -57,119 +42,101 @@ FROM voucher
 JOIN paket
 ON voucher.paket_id = paket.id
 ");
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 
-<title>Voucher WiFi</title>
+<title>Voucher</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 </head>
-<body>
 
-<h1 class="mb-4 text-center">
-Bintang.Net Voucher
-</h1>
-<a href="logout.php"
-class="btn btn-dark mb-3">
+<body class="bg-light">
 
-Logout
+<div class="container-fluid">
+
+<div class="row">
+
+<div class="col-md-2 bg-dark text-white min-vh-100 p-3">
+
+<h3 class="mb-4">
+
+<i class="bi bi-wifi"></i>
+
+Bintang.Net
+
+</h3>
+
+<a href="dashboard.php"
+class="btn btn-dark w-100 text-start mb-2">
+
+🏠 Dashboard
 
 </a>
-<div class="row mb-4">
 
-<div class="col-md-3">
+<a href="tambah_paket.php"
+class="btn btn-dark w-100 text-start mb-2">
 
-<div class="card text-center shadow">
+📦 Paket Internet
 
-<div class="card-body">
+</a>
 
-<h5>Total Voucher</h5>
+<a href="voucher.php"
+class="btn btn-primary w-100 text-start mb-2">
 
-<h2>
+🎫 Voucher
 
-<?= $totalVoucher ?>
+</a>
+
+<a href="logout.php"
+class="btn btn-danger w-100 text-start">
+
+🚪 Logout
+
+</a>
+
+</div>
+
+<div class="col-md-10 p-4">
+
+<h2 class="mb-4">
+
+<i class="bi bi-ticket-perforated"></i>
+
+Data Voucher
 
 </h2>
 
-</div>
+<div class="card shadow border-0 p-4 mb-4">
 
-</div>
+<h4 class="mb-3">
 
-</div>
+Generate Voucher
 
-<div class="col-md-3">
+</h4>
 
-<div class="card text-center shadow">
+<form method="POST">
 
-<div class="card-body">
+<input type="number"
+name="jumlah"
+class="form-control mb-3"
+placeholder="Jumlah Voucher"
+required>
 
-<h5>Voucher Aktif</h5>
-
-<h2>
-
-<?= $totalAktif ?>
-
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card text-center shadow">
-
-<div class="card-body">
-
-<h5>Total Paket</h5>
-
-<h2>
-
-<?= $totalPaket ?>
-
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-3">
-
-<div class="card text-center shadow">
-
-<div class="card-body">
-
-<h5>Pendapatan</h5>
-
-<h5>
-
-Rp <?= $totalPendapatan['total'] ?>
-
-</h5>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<form method="POST" class="card p-4 shadow">
-
-<select name="paket" class="form-select">
+<select name="paket"
+class="form-select">
 
 <?php
 
-$paket = mysqli_query($conn, "SELECT * FROM paket");
+$paket = mysqli_query($conn,
+"SELECT * FROM paket");
 
 while($p = mysqli_fetch_array($paket)){
 
@@ -186,23 +153,30 @@ Rp <?= $p['harga'] ?>
 
 </select>
 
-<button name="generate" class="btn btn-primary mt-3">
+<button name="generate"
+class="btn btn-primary mt-3">
+
 Generate Voucher
+
 </button>
 
 </form>
 
-<br><br>
+</div>
 
-<table class="table table-bordered table-striped mt-4">
+<div class="card shadow border-0 p-4">
+
+<table class="table table-hover align-middle">
 
 <tr>
-    <th>No</th>
-    <th>Kode Voucher</th>
-    <th>Paket</th>
-    <th>Durasi</th>
-    <th>Status</th>
-    <th>Aksi</th>
+
+<th>No</th>
+<th>Kode Voucher</th>
+<th>Paket</th>
+<th>Durasi</th>
+<th>Status</th>
+<th>Aksi</th>
+
 </tr>
 
 <?php
@@ -217,7 +191,15 @@ while($d = mysqli_fetch_array($data)){
 
 <td><?= $no++ ?></td>
 
-<td><?= $d['kode_voucher'] ?></td>
+<td>
+
+<span class="badge bg-dark fs-6">
+
+<?= $d['kode_voucher'] ?>
+
+</span>
+
+</td>
 
 <td><?= $d['nama_paket'] ?></td>
 
@@ -244,24 +226,27 @@ if($d['status'] == 'aktif'){
 ?>
 
 </td>
+
 <td>
+
+<a href="print.php?id=<?= $d['vid'] ?>"
+class="btn btn-success btn-sm">
+
+🖨 Print
+
+</a>
+
+<a href="pakai.php?id=<?= $d['vid'] ?>"
+class="btn btn-warning btn-sm">
+
+✔ Pakai
+
+</a>
 
 <a href="hapus_voucher.php?id=<?= $d['vid'] ?>"
 class="btn btn-danger btn-sm">
 
-Hapus
-
-</a>
-<a href="print.php?id=<?= $d['vid'] ?>"
-class="btn btn-success btn-sm">
-
-Print
-
-</a>
-<a href="pakai.php?id=<?= $d['vid'] ?>"
-class="btn btn-warning btn-sm">
-
-Pakai
+🗑 Hapus
 
 </a>
 
@@ -273,7 +258,13 @@ Pakai
 
 </table>
 
-</body>
-<div class="container mt-5">
 </div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
 </html>

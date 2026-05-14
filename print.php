@@ -52,7 +52,15 @@ $d = mysqli_fetch_array($data);
 
 </h1>
 
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=<?= $d['kode_voucher'] ?>">
+<?php
+
+$link =
+"http://192.168.1.1/login?username="
+. $d['kode_voucher'];
+
+?>
+
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=<?= urlencode($link) ?>">
 <br>
 
 <p>
