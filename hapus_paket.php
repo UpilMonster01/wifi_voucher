@@ -1,4 +1,11 @@
 <?php
+include 'koneksi.php';
 
-echo "file hapus jalan";
+$id = $_GET['id'];
+
+mysqli_query($conn,
+"DELETE FROM paket
+WHERE id='$id'");
+
+header("Location: paket.php");
 ?>

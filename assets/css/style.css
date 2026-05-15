@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#0f172a,#1e293b,#312e81);
+    min-height:100vh;
+    color:white;
+}
+
+a{
+    text-decoration:none;
+}
+
+.wrapper{
+    display:flex;
+}
+
+.sidebar{
+    width:280px;
+    min-height:100vh;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border-right:1px solid rgba(255,255,255,0.1);
+    padding:30px;
+    position:fixed;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:40px;
+    color:white;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:18px;
+    color:white;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    transform:translateX(5px);
+}
+
+.main{
+    margin-left:280px;
+    width:100%;
+    padding:30px;
+}
+
+.topbar{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    padding:20px;
+    border-radius:25px;
+    margin-bottom:30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h2{
+    font-size:35px;
+    margin-top:10px;
+}
+
+.table-container{
+    margin-top:30px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    padding:25px;
+    border-radius:25px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th,
+table td{
+    padding:15px;
+    text-align:left;
+}
+
+table th{
+    background:rgba(255,255,255,0.1);
+}
+
+table tr{
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.btn{
+    padding:12px 20px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    color:white;
+    font-weight:600;
+    transition:0.3s;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+input,
+select{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    margin-bottom:20px;
+    outline:none;
+}
+
+.login-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.login-box{
+    width:400px;
+    padding:40px;
+    border-radius:30px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    box-shadow:0 10px 40px rgba(0,0,0,0.3);
+}
+
+.login-box h1{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.voucher-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.voucher-card{
+    background:white;
+    color:#111;
+    border-radius:25px;
+    padding:20px;
+    position:relative;
+    overflow:hidden;
+}
+
+.voucher-card::before{
+    content:'';
+    position:absolute;
+    width:120px;
+    height:120px;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    top:-50px;
+    right:-50px;
+    border-radius:50%;
+}
+
+.voucher-title{
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.username{
+    font-size:32px;
+    font-weight:700;
+    margin:20px 0;
+    color:#4f46e5;
+}
+
+.badge{
+    padding:8px 15px;
+    border-radius:20px;
+    background:#ede9fe;
+    color:#4f46e5;
+    display:inline-block;
+    font-size:14px;
+}
+
+.qr{
+    margin-top:20px;
+}
+
+@media(max-width:768px){
+
+    .sidebar{
+        width:100%;
+        min-height:auto;
+        position:relative;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .wrapper{
+        flex-direction:column;
+    }
+}

@@ -1,29 +1,22 @@
 <?php
 session_start();
-
 include 'koneksi.php';
 
 if(isset($_POST['login'])){
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $u = $_POST['username'];
+    $p = $_POST['password'];
 
-    $cek = mysqli_query($conn, "
-    SELECT * FROM admin
-    WHERE username='$username'
-    AND password='$password'
-    ");
+    $cek = mysqli_query($conn,
+    "SELECT * FROM admin
+    WHERE username='$u'
+    AND password='$p'");
 
     if(mysqli_num_rows($cek) > 0){
 
         $_SESSION['login'] = true;
 
-        header("Location: voucher.php");
-
-    }else{
-
-        echo "Login gagal";
-
+        header("Location: dashboard.php");
     }
 }
 ?>
@@ -32,55 +25,36 @@ if(isset($_POST['login'])){
 <html>
 <head>
 
-<title>Login Admin</title>
+    <title>Login</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
+
 <body>
 
-<div class="container mt-5">
+<div class="login-page">
 
-<div class="row justify-content-center">
+    <form method="POST" class="login-box">
 
-<div class="col-md-4">
+        <h1>Admin Login</h1>
 
-<div class="card shadow p-4">
+        <input type="text"
+        name="username"
+        placeholder="Username"
+        required>
 
-<h3 class="text-center mb-4">
-Login Admin
-</h3>
+        <input type="password"
+        name="password"
+        placeholder="Password"
+        required>
 
-<form method="POST">
+        <button class="btn"
+        name="login">
+        Login
+        </button>
 
-<input type="text"
-name="username"
-class="form-control"
-placeholder="Username">
-
-<br>
-
-<input type="password"
-name="password"
-class="form-control"
-placeholder="Password">
-
-<br>
-
-<button name="login"
-class="btn btn-primary w-100">
-
-Login
-
-</button>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
+    </form>
 
 </div>
 

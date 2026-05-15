@@ -1,0 +1,1 @@
+console.log("Wifi Voucher System Ready");
